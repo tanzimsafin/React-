@@ -1,12 +1,17 @@
 import { useState, createContext, useContext } from "react";
 const Bulbcontext = createContext();//create a context
-function App() {
+function BulbcontextProvider({children}){
   const [light, setLight] = useState(true);
+ return <Bulbcontext.Provider value={{light:light,setLight:setLight}}>
+     {children}
+  </Bulbcontext.Provider>
+}
+function App() {
   return (
     <div>
-     <Bulbcontext.Provider value={{light:light,setLight:setLight}}>
+     <BulbcontextProvider>
           <Light />
-     </Bulbcontext.Provider>{/* wrapped in inside a provider / */}
+     </BulbcontextProvider>{/* wrapped in inside a provider / */}
       
       {/* least common ancestor */}
     </div>
@@ -14,7 +19,6 @@ function App() {
 }
 function Light() {
   //we have to pass a extra props here which doesn't need this light setLight veriable at all .Rather it just passes the props to it decendent
-
   return (
     <div>
       <LightBulb />
